@@ -1,1 +1,6 @@
-<h1>Post create component</h1>
+<mat-card>
+  <mat-form-field>
+    <textarea matInput rows="6" [(ngModel)]="enteredValue"></textarea>
+  </mat-form-field>
+  <button color="primary" mat-raised-button (click)="addPost()">Save Post</button>
+</mat-card>
