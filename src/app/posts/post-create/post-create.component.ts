@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-
+import { NgForm } from "@angular/forms";
+import { Post } from '../post.model';
+import { PostsService } from "../posts.service";
 @Component({
   selector: '<app-post-create>',
   templateUrl: './post-create.component.html',
@@ -7,20 +9,27 @@ import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 })
 
 export class PostCreateComponent implements OnInit{
-  enteredTitle?: string;
-  enteredContent?: string;
-  @Output() postCreated = new EventEmitter();
+  enteredTitle: any;
+  enteredContent: any;
+  // @Output() postCreated = new EventEmitter<Post>();
+  constructor(private postsService: PostsService){}
   ngOnInit() {
 
   }
 
-  addPost(){
-    console.log(this.enteredTitle, this.enteredContent);
-    const post = {
-      title: this.enteredTitle,
-      content: this.enteredContent
+  addPost(form: NgForm){
+    if(form.invalid){
+      return;
     }
-    this.postCreated.emit(post);
+
+    /* sharing data from child to parent
+    const post: Post = {
+      title: form.value.title,
+      content: form.value.content
+    }
+    this.postCreated.emit(post); */
+
+    this.postsService.addPost(form.value.title, form.value.content);
   }
 
 }

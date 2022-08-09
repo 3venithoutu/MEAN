@@ -1,6 +1,11 @@
 <app-header></app-header>
 <main>
+  <!-- sharing data from parent to child starts
   <app-post-create (postCreated)="postAdded($event)"></app-post-create>
   <app-posts-list [posts]="posts"></app-posts-list>
+        sharing data from parent to child ends -->
+
+  <app-post-create></app-post-create>
+  <app-posts-list></app-posts-list>
 </main>
 
