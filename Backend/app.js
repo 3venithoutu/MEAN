@@ -4,7 +4,7 @@ const Post = require("./models/post");
 const mongoose = require("mongoose");
 const app = express();
 
-mongoose.connect("mongodb+srv://3venithoutu:gz5mfJU9zmj5WOug@cluster0.xkkojok.mongodb.net/?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://3venithoutu:gz5mfJU9zmj5WOug@cluster0.xkkojok.mongodb.net/node-angular?retryWrites=true&w=majority")
   .then(() => {
     console.log("connected to database!");
   })
@@ -33,7 +33,8 @@ app.post("/api/posts", (req, res, next) => {
     title: req.body.title,
     content: req.body.content
   });
-  console.log(post);
+  // console.log(post);
+  post.save();
   res.status(201).json({
     message: "Post added successfully",
     post: post
@@ -42,24 +43,24 @@ app.post("/api/posts", (req, res, next) => {
 
 
 app.use('/api/posts', (req, res, next) => {
-  const posts = [
-    {
-      id: "fghv678",
-      title: "First server-side post",
-      content: "This is coming from server!"
-    },
-    {
-      id: "ijkmn78",
-      title: "Second server-side post",
-      content: "This is coming from server!"
-    }
-  ];
-  res.status(200).json(
-    {
-      message: "Posts fetched successfully!",
-      posts: posts
-    }
-  )
+  // const posts = [
+  //   {
+  //     id: "fghv678",
+  //     title: "First server-side post",
+  //     content: "This is coming from server!"
+  //   },
+  //   {
+  //     id: "ijkmn78",
+  //     title: "Second server-side post",
+  //     content: "This is coming from server!"
+  //   }
+  // ];
+  Post.find().then(documents => {
+    res.status(200).json({
+        message: "Posts fetched successfully!",
+        posts: documents
+      })
+  })
 })
 
 module.exports = app;
