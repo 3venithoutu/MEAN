@@ -5,11 +5,11 @@ const mongoose = require("mongoose");
 const app = express();
 
 mongoose.connect("mongodb+srv://3venithoutu:gz5mfJU9zmj5WOug@cluster0.xkkojok.mongodb.net/node-angular?retryWrites=true&w=majority")
-  .then(() => {
+.then(() => {
     console.log("connected to database!");
   })
-  .catch(() => {
-    console.log("connection failed!");
+  .catch((error) => {
+    console.log("connection failed!", error);
   })
 app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded)
@@ -42,7 +42,7 @@ app.post("/api/posts", (req, res, next) => {
 })
 
 
-app.use('/api/posts', (req, res, next) => {
+app.get('/api/posts', (req, res, next) => {
   // const posts = [
   //   {
   //     id: "fghv678",
@@ -60,6 +60,15 @@ app.use('/api/posts', (req, res, next) => {
         message: "Posts fetched successfully!",
         posts: documents
       })
+  })
+})
+
+app.delete("/api/posts/:id", (req, res, next) => {
+  Post.deleteOne({_id: req.params.id}).then(result => {
+    console.log(result);
+    res.status(200).json({
+      message: "Post deleted successfully"
+    })
   })
 })
 

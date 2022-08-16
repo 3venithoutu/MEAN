@@ -23,8 +23,13 @@ export class PostsListComponent implements OnInit {
     this.postsService.getPosts();
     this.postsSub = this.postsService.getPostsUpdatedListener().subscribe((posts: Post[]) => {
       this.posts = posts;
+      console.log("posts", this.posts);
     })
 
+  }
+
+  onDelete(postId: string){
+    this.postsService.deletePost(postId);
   }
 
   ngOnDestroy(){
